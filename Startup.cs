@@ -27,8 +27,9 @@ namespace QuizApp
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Db Context
-            services.AddDbContext<AppDbContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options =>
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("SQLiteConnection")));
 
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

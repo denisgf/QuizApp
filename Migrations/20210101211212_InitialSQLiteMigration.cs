@@ -2,7 +2,7 @@
 
 namespace QuizApp.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialSQLiteMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     CategoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CategoryName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -24,7 +24,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     DifficultyId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     DifficultyName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -37,7 +37,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     QuizId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     QuizName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -50,7 +50,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     TypeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     TypeName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -63,7 +63,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     QuestionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     QuestionStatement = table.Column<string>(nullable: true),
                     CorrectAnswerAnswerId = table.Column<int>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
@@ -105,7 +105,7 @@ namespace QuizApp.Migrations
                 columns: table => new
                 {
                     AnswerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Statement = table.Column<string>(nullable: true),
                     QuestionId = table.Column<int>(nullable: true),
                     IsCorrectAnswer = table.Column<bool>(nullable: false)

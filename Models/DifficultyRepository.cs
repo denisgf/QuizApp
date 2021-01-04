@@ -15,5 +15,9 @@ namespace QuizApp.Models
         }
         public IEnumerable<Difficulty> AllDifficulties => _appDbContext.Difficulties;
 
+        public Difficulty GetDifficultyById(int id)
+        {
+            return _appDbContext.Difficulties.FirstOrDefault(d => d.DifficultyId == id);
+        }
     }
 }

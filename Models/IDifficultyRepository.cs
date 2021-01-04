@@ -9,5 +9,6 @@ namespace QuizApp.Models
     public interface IDifficultyRepository
     {
         IEnumerable<Difficulty> AllDifficulties { get; }
+        Difficulty GetDifficultyById(int id);
     }
 }

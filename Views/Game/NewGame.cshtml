@@ -3,14 +3,20 @@
 
 @*@Html.DropDownList("myList3", Model.Difficulties)*@
 
-<form>
+<form asp-action="PlayGame">
     <table>
+        <tr>
+            <td>Number of questions</td>
+            <td>
+                <input asp-for="Count" type="number" min="1" max="50" value="1">
+            </td>
+        </tr>
         <tr>
             <td>Difficulty</td>
             <td>
                 <select asp-for="SelectedDifficulty"
                         asp-items="@(new SelectList(Model.Difficulties, "DifficultyId", "DifficultyName"))">
-                    <option>Any Difficulty</option>
+                    <option value="-1">Any Difficulty</option>
                 </select>
             </td>
         </tr>
@@ -19,13 +25,20 @@
             <td>
                 <select asp-for="SelectedType"
                         asp-items="@(new SelectList(Model.Types, "TypeId", "TypeName"))">
-                    <option>Any Type</option>
+                    <option value="-1">Any Type</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select asp-for="SelectedCategory"
+                        asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <option value="-1">Any Category</option>
                 </select>
             </td>
         </tr>
     </table>
 
-    <button asp-action="PlayGame">
-        Start Game
-    </button>
+    <input type="submit" value="Play Game"/>
 </form>

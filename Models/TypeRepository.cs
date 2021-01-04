@@ -14,5 +14,13 @@ namespace QuizApp.Models
         }
 
         public IEnumerable<Type> AllTypes => _appDbContext.Types;
+
+        public Type GetTypeById(int id)
+        {
+            return _appDbContext.Types.FirstOrDefault(t => t.TypeId == id);
+        }
+        
+
+        
     }
 }

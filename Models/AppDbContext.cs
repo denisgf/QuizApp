@@ -27,6 +27,17 @@ namespace QuizApp.Models
             modelBuilder.Entity<Question>()
                 .HasMany(q => q.IncorrectAnswers)
                 .WithOne(a => a.Question);
+
+            //modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, CategoryName = "" });
+
+            // Seed Difficulty
+
+            modelBuilder.Entity<Difficulty>().HasData(new Difficulty { DifficultyId = 1, DifficultyName = "Easy", Description = "easy" });
+            modelBuilder.Entity<Difficulty>().HasData(new Difficulty { DifficultyId = 2, DifficultyName = "Medium", Description = "medium" });
+            modelBuilder.Entity<Difficulty>().HasData(new Difficulty { DifficultyId = 3, DifficultyName = "Hard", Description = "hard" });
+
+            modelBuilder.Entity<Type>().HasData(new Type { TypeId = 1, TypeName = "Multiple Choice", Description = "multiple" });
+            modelBuilder.Entity<Type>().HasData(new Type { TypeId = 2, TypeName = "True / False", Description = "boolean" });
         }
 
     }

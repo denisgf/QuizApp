@@ -9,5 +9,6 @@ namespace QuizApp.Models
     {
         public int TypeId { get; set; }
         public string TypeName { get; set; }
+        public string Description { get; set; }
     }
 }

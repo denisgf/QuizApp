@@ -1,0 +1,31 @@
+﻿@model GameOptionsViewModel 
+
+
+@*@Html.DropDownList("myList3", Model.Difficulties)*@
+
+<form>
+    <table>
+        <tr>
+            <td>Difficulty</td>
+            <td>
+                <select asp-for="SelectedDifficulty"
+                        asp-items="@(new SelectList(Model.Difficulties, "DifficultyId", "DifficultyName"))">
+                    <option>Any Difficulty</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>
+                <select asp-for="SelectedType"
+                        asp-items="@(new SelectList(Model.Types, "TypeId", "TypeName"))">
+                    <option>Any Type</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <button asp-action="PlayGame">
+        Start Game
+    </button>
+</form>

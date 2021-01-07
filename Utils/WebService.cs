@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace QuizApp.Utils
 {
@@ -49,23 +50,57 @@ namespace QuizApp.Utils
         {
             string apiUrl = @"https://opentdb.com/api.php?amount=" + count;
 
-            if(categoryId != -1)
+            if (categoryId != -1)
             {
                 apiUrl += @"&category=" + categoryId;
             }
 
-            if(d != null)
+            if (d != null)
             {
                 apiUrl += @"&difficulty=" + d.Description;
             }
 
-            if(t != null)
+            if (t != null)
             {
                 apiUrl += @"&type=" + t.Description;
             }
 
             return apiUrl;
         }
+
+        public static JsonQuiz GetQuizFromUrl(string apiUrl)
+        {
+            try
+            {
+                string json = string.Empty;
+                
+                ServicePointManager.Expect100Continue = true;
+                //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    json = reader.ReadToEnd();
+                    
+                    var JsonObj = JsonConvert.DeserializeObject<JsonQuiz>(json);
+                    if (JsonObj != null)
+                    {
+                        return JsonObj;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message);
+            }
+            return null;
+        }
+
 
     }
 }

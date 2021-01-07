@@ -36,9 +36,22 @@ namespace QuizApp.Controllers
             Difficulty d = _difficultyRepository.GetDifficultyById(System.Int32.Parse(gameOptions.SelectedDifficulty));
             Type t = _typeRepository.GetTypeById(System.Int32.Parse(gameOptions.SelectedType));
 
+            // Generate API URL
             string apiUrl = WebService.CreateApiUrl(gameOptions.Count, d, t, System.Int32.Parse(gameOptions.SelectedCategory));
 
-            return View();
+            // Getting the Quiz from URL
+            JsonQuiz quiz = WebService.GetQuizFromUrl(apiUrl);
+
+            // Validation PENDING
+            if (quiz == null)
+            {
+                //return ErrorPageView();
+                return NotFound();
+            }
+
+            QuizViewModel quizViewModel = new QuizViewModel() { Quiz = quiz };
+
+            return View(quizViewModel);
         }
     }
 }

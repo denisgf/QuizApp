@@ -1,0 +1,19 @@
+﻿@model QuizViewModel
+
+<form asp-action="PlayGame">
+    @foreach (var q in @Model.Quiz.Questions)
+    {
+        <h2>Question:</h2>
+        <i>@q.Question</i>
+        <br />
+        @foreach (string r in q.IncorrectAnswers)
+        {
+            <input type="radio" name="response" value="@r" id="response" />@r<br />
+        }
+        <input type = "radio" name = "response" value = "@q.CorrectAnswer" id = "response" />@q.CorrectAnswer<br />
+   }
+
+
+
+    <input type="submit" value="Finish" />
+</form>

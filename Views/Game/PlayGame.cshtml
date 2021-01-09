@@ -1,19 +1,18 @@
 ﻿@model QuizViewModel
 
-<form asp-action="PlayGame">
-    @foreach (var q in @Model.Quiz.Questions)
-    {
+    <form asp-action="PlayGame">
+
+
         <h2>Question:</h2>
-        <i>@q.Question</i>
+        <i>@Model.QuestionStatement</i>
         <br />
-        @foreach (string r in q.IncorrectAnswers)
+        @foreach (string answer in @Model.Answers)
         {
-            <input type="radio" name="response" value="@r" id="response" />@r<br />
+            <input type="radio" name="response" value="@answer" id="response" />@answer<br />
         }
-        <input type = "radio" name = "response" value = "@q.CorrectAnswer" id = "response" />@q.CorrectAnswer<br />
-   }
+        
+        <input type="submit" asp-action="PlayGame" asp-route-newGame="false" value="Next" />
+        @*<input type="hidden" value="@Model.toJson()" name="json" />*@
 
-
-
-    <input type="submit" value="Finish" />
-</form>
+        <input type="submit" value="Finish" />
+    </form>

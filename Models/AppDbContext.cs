@@ -24,9 +24,7 @@ namespace QuizApp.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Question>()
-                .HasMany(q => q.IncorrectAnswers)
-                .WithOne(a => a.Question);
+            //modelBuilder.Entity<Question>().HasMany(q => q.IncorrectAnswers).WithOne(a => a.Question);
 
             //modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, CategoryName = "" });
 

@@ -8,8 +8,6 @@ namespace QuizApp.Models
     public class Answer
     {
         public int AnswerId { get; set; }
-        public string Statement { get; set; }
-        public Question Question { get; set; }
-        public Boolean IsCorrectAnswer { get; set; }
+        public string AnswerStatement { get; set; }
     }
 }

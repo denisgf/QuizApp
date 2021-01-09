@@ -8,5 +8,6 @@ namespace QuizApp.Models
     public interface ICategoryRepository
     {
         IEnumerable<Category> AllCategories { get; }
+        Category GetCategoryByName(string categoryName);
     }
 }

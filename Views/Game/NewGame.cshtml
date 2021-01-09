@@ -3,7 +3,7 @@
 
 @*@Html.DropDownList("myList3", Model.Difficulties)*@
 
-<form asp-action="PlayGame">
+<form asp-action="PlayGame" asp-route-newGame="true">
     <table>
         <tr>
             <td>Number of questions</td>

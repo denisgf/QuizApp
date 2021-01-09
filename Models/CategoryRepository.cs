@@ -19,5 +19,10 @@ namespace QuizApp.Models
                 return _appDbContext.Categories;
             }
         }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            return _appDbContext.Categories.FirstOrDefault(c => c.CategoryName.Equals(categoryName));
+        }
     }
 }

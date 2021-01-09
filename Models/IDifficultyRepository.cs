@@ -10,5 +10,6 @@ namespace QuizApp.Models
     {
         IEnumerable<Difficulty> AllDifficulties { get; }
         Difficulty GetDifficultyById(int id);
+        Difficulty GetDifficultyByName(string difficultyName);
     }
 }

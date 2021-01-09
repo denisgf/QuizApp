@@ -17,9 +17,9 @@ namespace QuizApp.Utils
         public IEnumerable<JsonQuestion> Questions { get; set; }
     }
 
-    public class JsonQuestion
+    public class JsonQuestion        
     {
-        private string _question;
+        private string _correctAnswer;
 
         [JsonProperty("category")]
         public string Category { get; set; }
@@ -31,19 +31,20 @@ namespace QuizApp.Utils
         public string Difficulty { get; set; }
 
         [JsonProperty("question")]
-        public string Question { 
-            get 
-            {
-                return HttpUtility.HtmlDecode(_question);
-            }
-            set 
-            {
-                _question = value;                
-            } 
-        }
+        public string Question { get; set; }
 
         [JsonProperty("correct_answer")]
-        public string CorrectAnswer { get; set; }
+        public string CorrectAnswer
+        {
+            get
+            {
+                return _correctAnswer;
+            }
+            set
+            {
+                _correctAnswer = HttpUtility.HtmlDecode(value);
+            }
+        }
 
         [JsonProperty("incorrect_answers")]
         public IEnumerable<string> IncorrectAnswers { get; set; }

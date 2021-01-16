@@ -20,9 +20,9 @@ namespace QuizApp.Models
             return _appDbContext.Difficulties.FirstOrDefault(d => d.DifficultyId == id);
         }
 
-        public Difficulty GetDifficultyByName(string difficultyName)
+        public Difficulty GetDifficultyByName(string difficultyDescription)
         {
-            return _appDbContext.Difficulties.FirstOrDefault(d => d.DifficultyName.Equals(difficultyName));
+            return _appDbContext.Difficulties.FirstOrDefault(d => d.Description.Equals(difficultyDescription));
         }
     }
 }

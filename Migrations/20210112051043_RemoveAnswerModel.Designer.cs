@@ -2,19 +2,35 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizApp.Models;
 
 namespace QuizApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210112051043_RemoveAnswerModel")]
+    partial class RemoveAnswerModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.10");
+
+            modelBuilder.Entity("QuizApp.Models.Answer", b =>
+                {
+                    b.Property<int>("AnswerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AnswerStatement")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AnswerId");
+
+                    b.ToTable("Answers");
+                });
 
             modelBuilder.Entity("QuizApp.Models.Category", b =>
                 {
@@ -73,8 +89,8 @@ namespace QuizApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CorrectAnswer")
                         .HasColumnType("TEXT");
@@ -95,6 +111,8 @@ namespace QuizApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("QuestionId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("DifficultyId");
 
@@ -149,6 +167,10 @@ namespace QuizApp.Migrations
 
             modelBuilder.Entity("QuizApp.Models.Question", b =>
                 {
+                    b.HasOne("QuizApp.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("QuizApp.Models.Difficulty", "Difficulty")
                         .WithMany()
                         .HasForeignKey("DifficultyId");

@@ -20,6 +20,8 @@ namespace QuizApp.Utils
     public class JsonQuestion        
     {
         private string _correctAnswer;
+        private string _question;
+        private IEnumerable<string> _incorrectAnswers;
 
         [JsonProperty("category")]
         public string Category { get; set; }
@@ -31,7 +33,17 @@ namespace QuizApp.Utils
         public string Difficulty { get; set; }
 
         [JsonProperty("question")]
-        public string Question { get; set; }
+        public string Question
+        {
+            get
+            {
+                return _question;
+            }
+            set
+            {
+                _question = HttpUtility.HtmlDecode(value);
+            }
+        }
 
         [JsonProperty("correct_answer")]
         public string CorrectAnswer
@@ -47,7 +59,22 @@ namespace QuizApp.Utils
         }
 
         [JsonProperty("incorrect_answers")]
-        public IEnumerable<string> IncorrectAnswers { get; set; }
+        public IEnumerable<string> IncorrectAnswers
+        {
+            get
+            {
+                return _incorrectAnswers;
+            }
+            set
+            {
+                List<string> list = new List<string>();
+                foreach(string str in value)
+                {
+                    list.Add(HttpUtility.HtmlEncode(str));
+                }
+                _incorrectAnswers = list;              
+            }
+        }
     }
 
     public class JsonTriviaCategories

@@ -9,5 +9,7 @@ namespace QuizApp.Models
     {
         IEnumerable<Quiz> AllQuizzes { get; }
         Quiz GetQuizById(int quizId);
+
+        public void InsertQuiz(Quiz quiz);
     }
 }

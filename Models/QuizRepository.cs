@@ -16,7 +16,19 @@ namespace QuizApp.Models
         
         public Quiz GetQuizById(int quizId)
         {
-            return _appDbContext.Quizzes.FirstOrDefault(q => q.QuizId == quizId);
+            return _appDbContext.Quizzes.Include(q => q.Questions).FirstOrDefault(q => q.QuizId == quizId);
+
+            //return _appDbContext.Quizzes.Where(q => q.QuizId == quizId)
+            //    .Include(q => q.Questions)
+            //        .ThenInclude()
+        }
+
+        public void InsertQuiz(Quiz quiz)
+        {
+            _appDbContext.Quizzes.Add(quiz);
+
+
+            _appDbContext.SaveChanges();
         }
 
         public IEnumerable<Quiz> AllQuizzes

@@ -36,8 +36,7 @@ namespace QuizApp
             services.AddScoped<IDifficultyRepository, DifficultyRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<ITypeRepository, TypeRepository>();
-            services.AddScoped<IAnswerRepository, AnswerRepository>();
-
+            
             // Register Framework services
             services.AddControllersWithViews();
 

@@ -1,18 +1,46 @@
 ﻿@model QuizViewModel
 
     <form asp-action="PlayGame">
-
-
-        <h2>Question:</h2>
+        <h4>Question info:</h4>
+        <b>Category: </b>@Model.Category
+        <b>Difficulty: </b>@Model.Difficulty
+        
         <i>@Model.QuestionStatement</i>
-        <br />
+        <br />        
         @foreach (string answer in @Model.Answers)
         {
-            <input type="radio" name="response" value="@answer" id="response" />@answer<br />
-        }
-        
-        <input type="submit" asp-action="PlayGame" asp-route-newGame="false" value="Next" />
-        @*<input type="hidden" value="@Model.toJson()" name="json" />*@
+            <input type="radio"
+                   name="response"
+                   value="@answer"
+                   id="response" @((Model.Responses[Model.CurrentQuestion] == answer) ? "checked=\"checked\"" : "") />@answer<br />
+            }
+        <br />
+        <input type="submit"
+               asp-action="PlayGame"
+               asp-route-newGame="false"
+               asp-route-currentQuestion="@Model.CurrentQuestion"
+               asp-route-quizId="@Model.QuizId"
+               asp-route-move="previous"
+               disabled="@((Model.CurrentQuestion == 0) ? "disabled" : null )"
+               value="Previous" />
 
-        <input type="submit" value="Finish" />
+        <input type="submit"
+               asp-action="PlayGame"
+               asp-route-newGame="false"
+               asp-route-currentQuestion="@Model.CurrentQuestion"
+               asp-route-quizId="@Model.QuizId"
+               asp-route-move="next"
+               disabled="@((Model.CurrentQuestion == Model.Responses.Count() - 1) ? "disabled" : null )"
+               value="Next" />
+        <input type="hidden" value="@Model.ResponsesToJson()" name="responses" />
+
+        <input type="submit" 
+               asp-action="ShowStatistics"
+               asp-route-quizId="@Model.QuizId"
+               asp-route-currentQuestion="@Model.CurrentQuestion"
+               value="Finish" />
+
+        <br />
+        <br />
+        <i>Question @(Model.CurrentQuestion + 1)/@Model.Responses.Count()</i>
     </form>

@@ -15,12 +15,19 @@ namespace QuizApp.Controllers
         private readonly IDifficultyRepository _difficultyRepository;
         private readonly ITypeRepository _typeRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IQuizRepository _quizRepository;
 
-        public GameController(IDifficultyRepository difficultyRepository, ITypeRepository typeRepository, ICategoryRepository categoryRepository)
+
+        public GameController(
+            IDifficultyRepository difficultyRepository, 
+            ITypeRepository typeRepository, 
+            ICategoryRepository categoryRepository,
+            IQuizRepository quizRepository)
         {
             _difficultyRepository = difficultyRepository;
             _typeRepository = typeRepository;
             _categoryRepository = categoryRepository;
+            _quizRepository = quizRepository;
         }
 
         public IActionResult NewGame()
@@ -46,24 +53,48 @@ namespace QuizApp.Controllers
 
         private Question CreateQuestionModel(JsonQuestion jsonQuestion)
         {
-            List<Answer> incorrectAnswers = new List<Answer>();
-            foreach(string incorrectAnswer in jsonQuestion.IncorrectAnswers)
-            {
-                incorrectAnswers.Add(new Answer() { AnswerStatement = incorrectAnswer });
-            }
+            //List<Answer> incorrectAnswers = new List<Answer>();
+            //foreach(string incorrectAnswer in jsonQuestion.IncorrectAnswers)
+            //{
+            //    incorrectAnswers.Add(new Answer() { AnswerStatement = incorrectAnswer });
+            //}
 
-            return new Question()
+            Question question = new Question()
             {
                 QuestionStatement = jsonQuestion.Question,
-                CorrectAnswer = new Answer() { AnswerStatement = jsonQuestion.CorrectAnswer },
-                IncorrectAnswers = incorrectAnswers,
-                Category = _categoryRepository.GetCategoryByName(jsonQuestion.Category),
+                CorrectAnswer = jsonQuestion.CorrectAnswer,
+                //IncorrectAnswers = incorrectAnswers,
+                IncorrectAnswers = jsonQuestion.IncorrectAnswers.ToList(),
+                Category = jsonQuestion.Category,
                 Type = _typeRepository.GetTypeByName(jsonQuestion.Type),
                 Difficulty = _difficultyRepository.GetDifficultyByName(jsonQuestion.Difficulty)
             };
+
+            return question;
         }
 
-        public IActionResult PlayGame(GameOptionsViewModel gameOptions, bool newGame, string json)
+        public IActionResult ShowStatistics(int quizId, string responses, int currentQuestion, string response)
+        {
+            int goodAnswers = 0;
+            Quiz quiz = _quizRepository.GetQuizById(quizId);
+            List<string> tmpResponses = QuizViewModel.ResponsesFromJson(responses);
+            tmpResponses[currentQuestion] = response;
+
+            for (int i = 0; i<quiz.Questions.Count(); i ++)
+            {
+                if (quiz.Questions[i].CorrectAnswer.Equals(tmpResponses[i]))
+                {
+                    goodAnswers++;
+                }
+            }
+
+            ViewBag.GoodAnswers = goodAnswers;
+            ViewBag.Total = quiz.Questions.Count();
+
+            return View();
+        }
+
+        public IActionResult PlayGame(GameOptionsViewModel gameOptions, bool newGame, int currentQuestion, int quizId, string response, string move, string responses)
         {
             if (newGame)
             {
@@ -83,35 +114,95 @@ namespace QuizApp.Controllers
                     //return ErrorPageView();
                     return NotFound();
                 }
+                if(jsonQuiz.ResponseCode != 0)
+                {
+                    return RedirectToAction("NewGame");
+                }
 
                 Quiz quiz = CreateQuizModel(jsonQuiz);
+                _quizRepository.InsertQuiz(quiz);
+
+
+                // TEST CODE
+                //Quiz quiz = _quizRepository.GetQuizById(6);
+
+                Question question = quiz.Questions[0];
 
                 QuizViewModel quizViewModel = new QuizViewModel()
                 {
                     QuizId = quiz.QuizId,
                     CurrentQuestion = 0,
-                    QuestionStatement = quiz.Questions[0].QuestionStatement,
-                    Answers = SortAllAnswers(quiz.Questions[0].IncorrectAnswers, quiz.Questions[0].CorrectAnswer),
-                    Responses= new List<string>(quiz.Questions.Count()) 
+                    QuestionStatement = question.QuestionStatement,
+                    Answers = SortAllAnswers(question.IncorrectAnswers, question.CorrectAnswer),
+                    Responses = CreateEmptyList(quiz.Questions.Count()),
+                    Category = question.Category,
+                    Difficulty = question.Difficulty.DifficultyName
                 };
+                
                                
                 return View(quizViewModel);
             }
             else
             {
-                //QuizViewModel quiz = QuizViewModel.fromJson(json);
-                return View();
+                Quiz quiz = _quizRepository.GetQuizById(quizId);
+
+                List<string> tmpResponses = QuizViewModel.ResponsesFromJson(responses);
+                tmpResponses[currentQuestion] = response;
+                   
+                // Update Database
+
+                // Validation Control
+                if (move == "next")
+                {
+                    if(currentQuestion < quiz.Questions.Count() - 1)
+                    {
+                        currentQuestion++;
+                    }
+                }
+                if(move == "previous")
+                {
+                    if(currentQuestion > 0)
+                    {
+                        currentQuestion--;
+                    }
+
+                }
+
+                Question question = quiz.Questions[currentQuestion];
+                QuizViewModel quizViewModel = new QuizViewModel()
+                {
+                    QuizId = quiz.QuizId,
+                    CurrentQuestion = currentQuestion,
+                    QuestionStatement = question.QuestionStatement,
+                    Answers = SortAllAnswers(question.IncorrectAnswers, question.CorrectAnswer),
+                    Responses = tmpResponses,
+                    Category = question.Category,
+                    Difficulty = question.Difficulty.DifficultyName
+                };
+
+                return View(quizViewModel);
             }
         }
 
-        private List<string> SortAllAnswers(List<Answer> incorrectAnswers, Answer correctAnswer)
+        private List<string> CreateEmptyList(int capacity)
+        {
+            List<string> list = new List<string>(capacity);
+            for (int i = 0; i<capacity; i++)
+            {
+                list.Add(null);
+            }
+
+            return list;
+        }
+
+        private List<string> SortAllAnswers(List<string> incorrectAnswers, string correctAnswer)
         {
             List<string> answers = new List<string>();
-            foreach(Answer answer in incorrectAnswers)
+            foreach(string answer in incorrectAnswers)
             {
-                answers.Add(answer.AnswerStatement);
+                answers.Add(answer);
             }
-            answers.Add(correctAnswer.AnswerStatement);
+            answers.Add(correctAnswer);
 
             answers.Sort();
             return answers;

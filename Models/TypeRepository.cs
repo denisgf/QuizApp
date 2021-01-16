@@ -20,9 +20,9 @@ namespace QuizApp.Models
             return _appDbContext.Types.FirstOrDefault(t => t.TypeId == id);
         }
 
-        public Type GetTypeByName(string typeName)
+        public Type GetTypeByName(string typeDescription)
         {
-            return _appDbContext.Types.FirstOrDefault(t => t.TypeName.Equals(typeName));
+            return _appDbContext.Types.FirstOrDefault(t => t.Description.Equals(typeDescription));
         }
     }
 }

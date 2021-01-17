@@ -32,7 +32,6 @@ namespace QuizApp
                 options.UseSqlite(Configuration.GetConnectionString("SQLiteConnection")));
 
             services.AddScoped<IQuizRepository, QuizRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IDifficultyRepository, DifficultyRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<ITypeRepository, TypeRepository>();

@@ -16,7 +16,6 @@ namespace QuizApp.Models
         }
 
         public DbSet<Quiz> Quizzes { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Difficulty> Difficulties { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Type> Types { get; set; }

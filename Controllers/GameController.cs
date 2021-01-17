@@ -14,19 +14,16 @@ namespace QuizApp.Controllers
     {
         private readonly IDifficultyRepository _difficultyRepository;
         private readonly ITypeRepository _typeRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly IQuizRepository _quizRepository;
 
 
         public GameController(
             IDifficultyRepository difficultyRepository, 
             ITypeRepository typeRepository, 
-            ICategoryRepository categoryRepository,
             IQuizRepository quizRepository)
         {
             _difficultyRepository = difficultyRepository;
             _typeRepository = typeRepository;
-            _categoryRepository = categoryRepository;
             _quizRepository = quizRepository;
         }
 

@@ -70,7 +70,7 @@ namespace QuizApp.Utils
                 List<string> list = new List<string>();
                 foreach(string str in value)
                 {
-                    list.Add(HttpUtility.HtmlEncode(str));
+                    list.Add(HttpUtility.HtmlDecode(str));
                 }
                 _incorrectAnswers = list;              
             }

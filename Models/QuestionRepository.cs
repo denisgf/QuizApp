@@ -14,10 +14,10 @@ namespace QuizApp.Models
         }
 
         public IEnumerable<Question> AllQuestions => _appDbContext.Questions;
-
+                
         public Question GetQuestionById(int questionId)
         {
             return _appDbContext.Questions.FirstOrDefault(q => q.QuestionId == questionId);
-        }
+        }      
     }
 }

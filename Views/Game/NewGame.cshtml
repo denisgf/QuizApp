@@ -2,43 +2,47 @@
 
 
 @*@Html.DropDownList("myList3", Model.Difficulties)*@
-<h2>Please, select the options to play</h2>
-<form asp-action="PlayGame" asp-route-newGame="true">
-    <table>
-        <tr>
-            <td>Number of questions</td>
-            <td>
-                <input asp-for="Count" type="number" min="1" max="50" value="10">
-            </td>
-        </tr>
-        <tr>
-            <td>Difficulty</td>
-            <td>
-                <select asp-for="SelectedDifficulty"
-                        asp-items="@(new SelectList(Model.Difficulties, "DifficultyId", "DifficultyName"))">
-                    <option value="-1">Any Difficulty</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Type</td>
-            <td>
-                <select asp-for="SelectedType"
-                        asp-items="@(new SelectList(Model.Types, "TypeId", "TypeName"))">
-                    <option value="-1">Any Type</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Category</td>
-            <td>
-                <select asp-for="SelectedCategory"
-                        asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-                    <option value="-1">Any Category</option>
-                </select>
-            </td>
-        </tr>
-    </table>
+<div class="title">
+    Please, select the options to play
+</div>
+<div class="options">
+    <form asp-action="PlayGame" asp-route-newGame="true">
 
-    <input type="submit" value="Play Game"/>
-</form>
+        <div class="optionLabel">
+            Number of Questions:
+        </div>
+        <div >
+            <input id="numberControl1" class="selectControl" asp-for="Count" type="number" min="1" max="50" value="2">
+        </div>
+        <div class="optionLabel">
+            Category:
+        </div>
+        <div>
+            <select class="selectControl"  asp-for="SelectedCategory"
+                    asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                <option value="-1">Any Category</option>
+            </select>
+        </div>
+        <div class="optionLabel">
+            Difficulty:
+        </div>
+        <div>
+            <select class="selectControl" asp-for="SelectedDifficulty"
+                    asp-items="@(new SelectList(Model.Difficulties, "DifficultyId", "DifficultyName"))">
+                <option value="-1">Any Difficulty</option>
+            </select>
+        </div>
+        <div class="optionLabel">
+            Type:
+        </div>
+        <div>
+            <select class="selectControl" asp-for="SelectedType"
+                    asp-items="@(new SelectList(Model.Types, "TypeId", "TypeName"))">
+                <option value="-1">Any Type</option>
+            </select>
+        </div>
+        <div class="button">
+            <input id="playGameButton" type="submit" value="Play Game" />
+        </div>
+    </form>
+</div>

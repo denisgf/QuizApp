@@ -15,16 +15,19 @@ namespace QuizApp.Controllers
         private readonly IDifficultyRepository _difficultyRepository;
         private readonly ITypeRepository _typeRepository;
         private readonly IQuizRepository _quizRepository;
+        private readonly IQuestionRepository _questionRepository;
 
 
         public GameController(
             IDifficultyRepository difficultyRepository, 
             ITypeRepository typeRepository, 
-            IQuizRepository quizRepository)
+            IQuizRepository quizRepository,
+            IQuestionRepository questionRepository)
         {
             _difficultyRepository = difficultyRepository;
             _typeRepository = typeRepository;
             _quizRepository = quizRepository;
+            _questionRepository = questionRepository;
         }
 
         public IActionResult NewGame()
@@ -87,6 +90,8 @@ namespace QuizApp.Controllers
 
             ViewBag.GoodAnswers = goodAnswers;
             ViewBag.Total = quiz.Questions.Count();
+
+            ViewBag.Accurate = Math.Round((double)(100 * goodAnswers / quiz.Questions.Count()), 2) ;
 
             return View();
         }

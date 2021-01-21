@@ -1,4 +1,9 @@
-﻿<h1>Welcome to the QuizApp game!</h1>
-<form>
-    <button asp-controller="Game" asp-action="NewGame">Start New Game</button>
-</form>
+﻿<div class="title">
+    Welcome to the QuizApp game!
+</div>
+<div class="button">
+    <form asp-controller="Game" asp-action="NewGame" method="get">
+        <input type="submit" value="Start New Game!" />
+    </form>
+</div>
+

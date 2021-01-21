@@ -1,5 +1,15 @@
-﻿<h1>Results</h1>
+﻿<div class="title">
+    Results
+</div>
+<div class="subTitle">
+    You have finished the game. Here are your results:
+</div>
+<div class="accurate">
+    @ViewBag.Accurate %
+</div>
+<div class="button">
+    <form asp-controller="Game" asp-action="NewGame" method="get">
+        <input type="submit" value="Play Again" />
+    </form>
+</div>
 
-<h4>You have finished the game. Here are your results:</h4>
-Total of Questions: @ViewBag.Total
-Good Answers: @ViewBag.GoodAnswers

@@ -1,11 +1,14 @@
-﻿<div class="title">
-    Results
+﻿<div class="title titleResult">
+    Quiz complete
 </div>
 <div class="subTitle">
-    You have finished the game. Here are your results:
+    Your score:
 </div>
 <div class="accurate">
     @ViewBag.Accurate %
+</div>
+<div class="subTitle">
+    Correct Answers: @ViewBag.CorrectAnswers of @ViewBag.Total
 </div>
 <div class="button">
     <form asp-controller="Game" asp-action="NewGame" method="get">

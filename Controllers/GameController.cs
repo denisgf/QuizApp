@@ -12,11 +12,12 @@ namespace QuizApp.Controllers
 {
     public class GameController : Controller
     {
+        private const int TOTAL_PERCENT = 100;
+        private const int PRECISION = 2;
         private readonly IDifficultyRepository _difficultyRepository;
         private readonly ITypeRepository _typeRepository;
         private readonly IQuizRepository _quizRepository;
         private readonly IQuestionRepository _questionRepository;
-
 
         public GameController(
             IDifficultyRepository difficultyRepository, 
@@ -75,7 +76,7 @@ namespace QuizApp.Controllers
 
         public IActionResult ShowStatistics(int quizId, string responses, int currentQuestion, string response)
         {
-            int goodAnswers = 0;
+            int correctAnswers = 0;
             Quiz quiz = _quizRepository.GetQuizById(quizId);
             List<string> tmpResponses = QuizViewModel.ResponsesFromJson(responses);
             tmpResponses[currentQuestion] = response;
@@ -84,14 +85,14 @@ namespace QuizApp.Controllers
             {
                 if (quiz.Questions[i].CorrectAnswer.Equals(tmpResponses[i]))
                 {
-                    goodAnswers++;
+                    correctAnswers++;
                 }
             }
 
-            ViewBag.GoodAnswers = goodAnswers;
+            ViewBag.CorrectAnswers = correctAnswers;
             ViewBag.Total = quiz.Questions.Count();
 
-            ViewBag.Accurate = Math.Round((double)(100 * goodAnswers / quiz.Questions.Count()), 2) ;
+            ViewBag.Accurate = Math.Round((double)(TOTAL_PERCENT * correctAnswers / quiz.Questions.Count()), PRECISION) ;
 
             return View();
         }
@@ -100,12 +101,12 @@ namespace QuizApp.Controllers
         {
             if (newGame)
             {
-                // Creating the Quiz from the options entered (gameOptions)
-                Difficulty d = _difficultyRepository.GetDifficultyById(System.Int32.Parse(gameOptions.SelectedDifficulty));
-                Models.Type t = _typeRepository.GetTypeById(System.Int32.Parse(gameOptions.SelectedType));
+                Difficulty difficulty;
+                Models.Type type;
+                CreatingQuizFromOptions(gameOptions, out difficulty, out type);
 
                 // Generate API URL
-                string apiUrl = WebService.CreateApiUrl(gameOptions.Count, d, t, System.Int32.Parse(gameOptions.SelectedCategory));
+                string apiUrl = WebService.CreateApiUrl(gameOptions.Count, difficulty, type, System.Int32.Parse(gameOptions.SelectedCategory));
 
                 // Getting the Quiz from URL
                 JsonQuiz jsonQuiz = WebService.GetQuizFromUrl(apiUrl);
@@ -116,7 +117,7 @@ namespace QuizApp.Controllers
                     //return ErrorPageView();
                     return NotFound();
                 }
-                if(jsonQuiz.ResponseCode != 0)
+                if (jsonQuiz.ResponseCode != 0)
                 {
                     return RedirectToAction("NewGame");
                 }
@@ -140,8 +141,8 @@ namespace QuizApp.Controllers
                     Category = question.Category,
                     Difficulty = question.Difficulty.DifficultyName
                 };
-                
-                               
+
+
                 return View(quizViewModel);
             }
             else
@@ -184,6 +185,12 @@ namespace QuizApp.Controllers
 
                 return View(quizViewModel);
             }
+        }
+
+        private void CreatingQuizFromOptions(GameOptionsViewModel gameOptions, out Difficulty d, out Models.Type t)
+        {
+            d = _difficultyRepository.GetDifficultyById(System.Int32.Parse(gameOptions.SelectedDifficulty));
+            t = _typeRepository.GetTypeById(System.Int32.Parse(gameOptions.SelectedType));
         }
 
         private List<string> CreateEmptyList(int capacity)

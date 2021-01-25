@@ -1,17 +1,19 @@
 ﻿@model QuizViewModel
 <form asp-action="PlayGame">
             
-    <div class="title question">
-        @Model.QuestionStatement
+    <div class="title question">        
+        @Model.QuestionStatement        
     </div>
     <div class="radioButtonsGroup">
         @foreach (string answer in @Model.Answers)
         {
             <div class="radioButton">
-                <input type="radio"
-                    name="response"
-                    value="@answer"
-                    id="response" @((Model.Responses[Model.CurrentQuestion] == answer) ? "checked=\"checked\"" : "") />@answer
+                <label>
+                    <input type="radio"
+                           name="response"
+                           value="@answer"
+                           id="response" @((Model.Responses[Model.CurrentQuestion] == answer) ? "checked=\"checked\"" : "") />@answer
+                    </label>
             </div>
         }
     </div>

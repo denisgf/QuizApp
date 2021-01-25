@@ -17,7 +17,11 @@ namespace QuizApp.Models
 
         public Difficulty GetDifficultyById(int id)
         {
-            return _appDbContext.Difficulties.FirstOrDefault(d => d.DifficultyId == id);
+            return (from difficulty in _appDbContext.Difficulties
+                    where difficulty.DifficultyId == id
+                    select difficulty).FirstOrDefault();
+
+           // return _appDbContext.Difficulties.FirstOrDefault(d => d.DifficultyId == id);
         }
 
         public Difficulty GetDifficultyByName(string difficultyDescription)

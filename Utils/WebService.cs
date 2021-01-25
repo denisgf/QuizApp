@@ -73,10 +73,7 @@ namespace QuizApp.Utils
             try
             {
                 string json = string.Empty;
-                
                 ServicePointManager.Expect100Continue = true;
-                //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
-
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
                 request.Method = "GET";

@@ -12,7 +12,7 @@ namespace QuizApp.Models
         public string QuestionStatement { get; set; }
         public string CorrectAnswer { get; set; }
         public List<string> IncorrectAnswers { get; set; }
-        public string Category { get; set; }
+        public string Category1 { get; set; }
         public Type Type { get; set; }
         public Difficulty Difficulty { get; set; }
     }

@@ -66,7 +66,7 @@ namespace QuizApp.Controllers
                 CorrectAnswer = jsonQuestion.CorrectAnswer,
                 //IncorrectAnswers = incorrectAnswers,
                 IncorrectAnswers = jsonQuestion.IncorrectAnswers.ToList(),
-                Category = jsonQuestion.Category,
+                Category1 = jsonQuestion.Category,
                 Type = _typeRepository.GetTypeByName(jsonQuestion.Type),
                 Difficulty = _difficultyRepository.GetDifficultyByName(jsonQuestion.Difficulty)
             };
@@ -138,7 +138,7 @@ namespace QuizApp.Controllers
                     QuestionStatement = question.QuestionStatement,
                     Answers = SortAllAnswers(question.IncorrectAnswers, question.CorrectAnswer),
                     Responses = CreateEmptyList(quiz.Questions.Count()),
-                    Category = question.Category,
+                    Category = question.Category1,
                     Difficulty = question.Difficulty.DifficultyName
                 };
 
@@ -179,7 +179,7 @@ namespace QuizApp.Controllers
                     QuestionStatement = question.QuestionStatement,
                     Answers = SortAllAnswers(question.IncorrectAnswers, question.CorrectAnswer),
                     Responses = tmpResponses,
-                    Category = question.Category,
+                    Category = question.Category1,
                     Difficulty = question.Difficulty.DifficultyName
                 };
 

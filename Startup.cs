@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,8 @@ namespace QuizApp
                 //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
                 options.UseSqlite(Configuration.GetConnectionString("SQLiteConnection")));
 
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IDifficultyRepository, DifficultyRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
@@ -38,7 +41,7 @@ namespace QuizApp
             
             // Register Framework services
             services.AddControllersWithViews();
-
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,12 +56,15 @@ namespace QuizApp
             app.UseStaticFiles();
             
             app.UseRouting();
+            app.UseAuthentication();
+
             // app.UseStatusCodePages();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: default,
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

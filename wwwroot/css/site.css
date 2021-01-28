@@ -57,7 +57,8 @@
     text-align: center;
 }
 
-.button input {        
+
+.button input, .my-button {        
     border-radius: 10px;
     border: 4px double #cccccc;        
     text-align: center;
@@ -128,8 +129,52 @@
 .radioButton label:hover{
     opacity:0.5;
 }
-    
 
 #playGameButton{
     margin-top:50px;
 }
+
+li{
+    list-style-type: none;    
+}
+
+ul{
+    margin:0;
+    padding:0;
+    display:flex;
+}
+
+a {
+    text-decoration: none;
+    color: gray;    
+    padding: 0 2vw;
+}
+
+a:hover{
+    text-decoration:none;
+    opacity: 0.3;
+}
+
+nav {
+    width: 100%;
+    background-color: lightgrey;  
+    margin: 5px 0;
+}
+
+.login-menu{
+    margin-left: auto;
+}
+
+.login-form{
+    margin: 0 2vw;
+}
+
+#logout:hover{
+    opacity: 0.3;
+}
+
+input[type="checkbox"]#Input_RememberMe:checked + span {
+    border-color: red;
+    background-color: red;
+}
+

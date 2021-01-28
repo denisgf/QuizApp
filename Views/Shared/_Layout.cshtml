@@ -3,17 +3,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="~/css/site.css" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        <partial name="_LoginPartial" />
-    </div>
+    
+    
     <div class="content">
+        <div class="just">
+            <nav class="navbar">
+                <div class="login-menu">
+                    <partial name="_LoginPartial" />
+                </div>
+            </nav>
+        </div>
         @RenderBody()
     </div>
     @RenderSection("Scripts", required: false)

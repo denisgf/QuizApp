@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QuizApp.Models;
 using QuizApp.Utils;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace QuizApp.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
         private const int TOTAL_PERCENT = 100;

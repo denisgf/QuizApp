@@ -1,4 +1,8 @@
-﻿body {
+﻿html, body, .content {
+    height: 100%;
+}
+
+body {
     margin:0px;
     padding:0px;
     background-color: lightgrey;
@@ -6,18 +10,21 @@
     color: white;
 }
 
-.content {
-    background-color: gray;
+.content {    
     margin-left: 20%;
     margin-right:20%;
-    height:100vh;
+}
+
+.bg-color-gray{
+    background-color: gray;
 }
 
 .title {
     font-size: 2.0em;
     text-align: center;
-    padding-top:50px;
-    height:120px;
+    padding-top: 50px;
+    height: auto;
+    min-height: 120px;
     /*
     margin-bottom: 70px;*/
 }
@@ -51,21 +58,61 @@
     font-weight: bold;
     padding-left: 10%;
     padding-right: 10%;
+    height: auto;
+    min-height: 150px;
 }
 
 .button{
-    text-align: center;
+    text-align: center;    
 }
 
+.test{
+    display: inline-block;
+    padding: 0.46em 1.6em;
+    border: 0.1em solid #000000;
+    margin: 0 0.2em 0.2em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: 300;
+    color: #000000;
+    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+    background-color: #ffffff;
+    text-align: center;
+    transition: all 0.15s;
+}
+
+.test:hover{
+    text-shadow: 0 0 2em rgba(255,255,255,1);
+    color: #ffffff;
+    border-color: #ffffff;
+}
 
 .button input, .my-button {        
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     border: 4px double #cccccc;        
     text-align: center;
     font-size: 1.1em;
-    padding: 20px;
-    width: 200px;    
-    margin: 50px 20px;
+    min-width: 8em;
+    /*padding: 20px;*/
+    /*width: 100%; */  
+    /*margin: 50px 20px;*/
+
+    display: inline-block;
+    padding: 1em 1.5em;
+    /*border: 0.1em solid #000000;*/
+    margin: 1.5em 0.75em;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+    text-decoration: none;
+    /*font-family: sans-serif;*/
+    font-weight: 300;
+    /*color: #000000;*/
+    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+    /*background-color: #ffffff;*/
+    text-align: center;
+    transition: all 0.15s;
 }
 
 .optionLabel{
@@ -90,7 +137,7 @@
 
 .radioButtonsGroup{
     align-content: center;
-    height: 225px;
+    height: 272px;
 }
 
 .radioButton {
@@ -107,6 +154,15 @@
     padding: 15px 10px;    
     border-radius: 6px;
 }
+
+input[type="radio"]{
+    margin-right: 8px;
+}
+
+input[type="number"]{
+    padding-left: 5px;
+}
+
 /*
 .radioButton input[type="radio"]{
     opacity: 0;
@@ -126,12 +182,31 @@
     border-color: #4c4;
 }
     */
-.radioButton label:hover{
-    opacity:0.5;
+.radioButton:hover{
+    background-color: lightblue;
+    color: dimgray;
 }
 
-#playGameButton{
-    margin-top:50px;
+#playGameButton {
+    margin-top: 50px;   
+}
+
+.buttonTransition {
+    transition-property: background-color, color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+    .buttonTransition:hover {
+        /*background-color: dimgray;
+        color: white;*/
+        background-color: lightblue;
+        color: dimgray;
+    }
+
+.no-transition:hover {
+    background-color: rgba(239, 239, 239, 0.3);
+    color: rgba(16, 16, 16, 0.3);
 }
 
 li{
@@ -158,7 +233,7 @@ a:hover{
 nav {
     width: 100%;
     background-color: lightgrey;  
-    margin: 5px 0;
+    margin: 0;
 }
 
 .login-menu{
@@ -169,12 +244,25 @@ nav {
     margin: 0 2vw;
 }
 
+#logout {
+    padding-top: 7px;
+    padding-bottom: 9px;
+}
+
 #logout:hover{
     opacity: 0.3;
 }
+/*
+@media all and (max-width:30em) {
+    .button input {
+        display: block;
+        margin: 0.4em auto;
+    }
+}*/
 
-input[type="checkbox"]#Input_RememberMe:checked + span {
-    border-color: red;
-    background-color: red;
+@media only screen and (max-width: 768px) {
+    .button input {
+        display: block;
+        margin: 0.4em auto;
+    }
 }
-

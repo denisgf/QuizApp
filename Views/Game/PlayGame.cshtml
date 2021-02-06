@@ -1,5 +1,6 @@
 ﻿@model QuizViewModel
-<form asp-action="PlayGame">
+
+<form asp-action="PlayGame" class="bg-color-gray">
             
     <div class="title question">        
         @Model.QuestionStatement        
@@ -7,7 +8,7 @@
     <div class="radioButtonsGroup">
         @foreach (string answer in @Model.Answers)
         {
-            <div class="radioButton">
+            <div class="radioButton" onclick="$('input', this).prop('checked', true)">
                 <label>
                     <input type="radio"
                            name="response"
@@ -19,6 +20,7 @@
     </div>
     <div class="button">
         <input type="submit"
+               class="buttonTransition @((Model.CurrentQuestion == 0) ? "no-transition" : "")"
                 asp-action="PlayGame"
                 asp-route-newGame="false"
                 asp-route-currentQuestion="@Model.CurrentQuestion"
@@ -28,6 +30,7 @@
                 value="Previous" />
 
         <input type="submit"
+               class="buttonTransition @((Model.CurrentQuestion == Model.Responses.Count() - 1) ? "no-transition" : "")"
                 asp-action="PlayGame"
                 asp-route-newGame="false"
                 asp-route-currentQuestion="@Model.CurrentQuestion"
@@ -38,6 +41,7 @@
         <input type="hidden" value="@Model.ResponsesToJson()" name="responses" />
 
         <input type="submit"
+               class="buttonTransition"
                 asp-action="ShowStatistics"
                 asp-route-quizId="@Model.QuizId"
                 asp-route-currentQuestion="@Model.CurrentQuestion"

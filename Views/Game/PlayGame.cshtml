@@ -1,7 +1,6 @@
 ﻿@model QuizViewModel
 
-<form asp-action="PlayGame" class="bg-color-gray">
-            
+<form asp-action="PlayGame" class="bg-color-gray">            
     <div class="title question">        
         @Model.QuestionStatement        
     </div>
@@ -47,6 +46,5 @@
                 asp-route-currentQuestion="@Model.CurrentQuestion"
                 value="Finish" />
     </div>            
-    @*Question @(Model.CurrentQuestion + 1)/@Model.Responses.Count()*@
 </form>
   

@@ -24,13 +24,7 @@ namespace QuizApp.Models
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Question>().HasMany(q => q.IncorrectAnswers).WithOne(a => a.Question);
-
-            //modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, CategoryName = "" });
-
-            // Seed Difficulty
+            base.OnModelCreating(modelBuilder);           
 
             modelBuilder.Entity<Question>().Property(p => p.IncorrectAnswers).HasConversion(
                 v => JsonConvert.SerializeObject(v),

@@ -22,7 +22,6 @@ namespace QuizApp.Utils
                 ServicePointManager.Expect100Continue = true;
                 //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 
-
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
 
@@ -40,7 +39,7 @@ namespace QuizApp.Utils
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e.Message);
+                
             }
 
             return Enumerable.Empty<JsonCategory>();
@@ -93,7 +92,7 @@ namespace QuizApp.Utils
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e.Message);
+               
             }
             return null;
         }

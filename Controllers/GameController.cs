@@ -56,12 +56,6 @@ namespace QuizApp.Controllers
 
         private Question CreateQuestionModel(JsonQuestion jsonQuestion)
         {
-            //List<Answer> incorrectAnswers = new List<Answer>();
-            //foreach(string incorrectAnswer in jsonQuestion.IncorrectAnswers)
-            //{
-            //    incorrectAnswers.Add(new Answer() { AnswerStatement = incorrectAnswer });
-            //}
-
             Question question = new Question()
             {
                 QuestionStatement = jsonQuestion.Question,
@@ -107,16 +101,13 @@ namespace QuizApp.Controllers
                 Models.Type type;
                 CreatingQuizFromOptions(gameOptions, out difficulty, out type);
 
-                // Generate API URL
                 string apiUrl = WebService.CreateApiUrl(gameOptions.Count, difficulty, type, System.Int32.Parse(gameOptions.SelectedCategory));
 
-                // Getting the Quiz from URL
                 JsonQuiz jsonQuiz = WebService.GetQuizFromUrl(apiUrl);
 
-                // Validation PENDING
                 if (jsonQuiz == null)
                 {
-                    //return ErrorPageView();
+                    //return ErrorPageView(); NOT IMPLEMENTED YET
                     return NotFound();
                 }
                 if (jsonQuiz.ResponseCode != 0)
@@ -126,10 +117,6 @@ namespace QuizApp.Controllers
 
                 Quiz quiz = CreateQuizModel(jsonQuiz);
                 _quizRepository.InsertQuiz(quiz);
-
-
-                // TEST CODE
-                //Quiz quiz = _quizRepository.GetQuizById(6);
 
                 Question question = quiz.Questions[0];
 
@@ -144,7 +131,6 @@ namespace QuizApp.Controllers
                     Difficulty = question.Difficulty.DifficultyName
                 };
 
-
                 return View(quizViewModel);
             }
             else
@@ -153,10 +139,7 @@ namespace QuizApp.Controllers
 
                 List<string> tmpResponses = QuizViewModel.ResponsesFromJson(responses);
                 tmpResponses[currentQuestion] = response;
-                   
-                // Update Database
-
-                // Validation Control
+                 
                 if (move == "next")
                 {
                     if(currentQuestion < quiz.Questions.Count() - 1)
@@ -170,7 +153,6 @@ namespace QuizApp.Controllers
                     {
                         currentQuestion--;
                     }
-
                 }
 
                 Question question = quiz.Questions[currentQuestion];

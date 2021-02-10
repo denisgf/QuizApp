@@ -16,13 +16,6 @@ namespace QuizApp.Models
         
         public Quiz GetQuizById(int quizId)
         {
-            //return _appDbContext.Quizzes.Include(q => q.Questions).FirstOrDefault(q => q.QuizId == quizId);
-            //return _appDbContext.Quizzes
-            //    .Include(e => e.Questions)
-            //        .ThenInclude(e => e.Difficulty)
-            //    .Include(e => e.Questions)
-            //        .ThenInclude(e => e.Type)
-            //    .FirstOrDefault(q => q.QuizId == quizId);
             return _appDbContext.Quizzes.Where(q => q.QuizId == quizId)
                 .Include(q => q.Questions)
                     .ThenInclude(e => e.Difficulty)
@@ -32,8 +25,6 @@ namespace QuizApp.Models
         public void InsertQuiz(Quiz quiz)
         {
             _appDbContext.Quizzes.Add(quiz);
-
-
             _appDbContext.SaveChanges();
         }
 
